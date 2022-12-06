@@ -1,3 +1,7 @@
+use puzzles::*;
+
+mod puzzles;
+
 fn main() {
-    println!("Hello, world!");
+    println!("{}", elf_calories::highest_calories());
 }
