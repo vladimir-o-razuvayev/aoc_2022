@@ -8,6 +8,7 @@ fn main() {
         elf_calories::highest_calories(3)
     );
     println!("RPS Score: {:?}", elf_rps::score());
+    println!("Rucksack Sum: {:?}", elf_rucksack::sum());
 }
 
 mod prelude {
