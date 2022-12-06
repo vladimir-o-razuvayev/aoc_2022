@@ -1,6 +1,4 @@
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use crate::prelude::*;
 use std::str::FromStr;
 
 pub fn highest_calories(count: usize) -> usize {
@@ -24,12 +22,4 @@ pub fn highest_calories(count: usize) -> usize {
     elves.sort_by(|a, b| b.cmp(a));
 
     elves.iter().take(count).sum()
-}
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }
