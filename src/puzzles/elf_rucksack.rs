@@ -25,3 +25,26 @@ pub fn sum() -> usize {
 
     sum
 }
+
+pub fn badge_sum() -> usize {
+    let mut sum = 0;
+    let lines: Vec<&str> = include_str!("elf_rucksack_input.txt").lines().collect();
+    let groups = lines.chunks(3);
+    for group_members in groups {
+        let first: HashSet<u8> = group_members[0].bytes().into_iter().collect();
+        let second: HashSet<u8> = group_members[1].bytes().into_iter().collect();
+        let third: HashSet<u8> = group_members[2].bytes().into_iter().collect();
+        for x in first.intersection(&second) {
+            if third.contains(x) {
+                println!("what {:?}", x);
+                if x.is_ascii_uppercase() {
+                    sum += *x as i32 - 38;
+                } else {
+                    sum += *x as i32 - 96;
+                }
+                break;
+            }
+        }
+    }
+    sum as usize
+}
