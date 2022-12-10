@@ -36,7 +36,6 @@ pub fn badge_sum() -> usize {
         let third: HashSet<u8> = group_members[2].bytes().into_iter().collect();
         for x in first.intersection(&second) {
             if third.contains(x) {
-                println!("what {:?}", x);
                 if x.is_ascii_uppercase() {
                     sum += *x as i32 - 38;
                 } else {

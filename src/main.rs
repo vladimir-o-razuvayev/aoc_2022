@@ -10,6 +10,7 @@ fn main() {
     println!("RPS Score: {:?}", elf_rps::score());
     println!("Rucksack Sum: {:?}", elf_rucksack::sum());
     println!("Badge Sum: {:?}", elf_rucksack::badge_sum());
+    println!("Overlap Sum: {:?}", day_4::overlap_sum());
 }
 
 mod prelude {
