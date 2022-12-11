@@ -10,34 +10,7 @@ use nom::{
     Finish, IResult,
 };
 
-#[derive(Clone, Copy)]
-struct Crate(char);
-
-impl fmt::Debug for Crate {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
-
-impl fmt::Display for Crate {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        fmt::Debug::fmt(self, f)
-    }
-}
-
-fn parse_crate(i: &str) -> IResult<&str, Crate> {
-    let first_char = |s: &str| Crate(s.chars().next().unwrap());
-    map(delimited(tag("["), take(1_usize), tag("]")), first_char)(i)
-}
-
-fn parse_crate_line(i: &str) -> IResult<&str, Vec<Option<Crate>>> {
-    separated_list1(
-        tag(" "),
-        alt((map(parse_crate, Some), map(tag("   "), |_| None))),
-    )(i)
-}
-
-pub fn print_crates() {
+pub fn print_crates() -> String {
     let mut lines = include_str!("day_5_input.txt").lines();
 
     let crate_lines: Vec<_> = lines
@@ -58,13 +31,10 @@ pub fn print_crates() {
         apply_rev(&mut piles, ins);
     }
 
-    println!(
-        "answer = {}",
-        piles
-            .iter()
-            .map(|pile| pile.last().unwrap().to_string())
-            .collect::<String>()
-    );
+    piles
+        .iter()
+        .map(|pile| pile.last().unwrap().to_string())
+        .collect()
 }
 
 fn transpose_rev<T>(v: Vec<Vec<Option<T>>>) -> Vec<Vec<T>> {
@@ -80,6 +50,17 @@ fn transpose_rev<T>(v: Vec<Vec<Option<T>>>) -> Vec<Vec<T>> {
                 .collect::<Vec<T>>()
         })
         .collect()
+}
+
+// Parse Crates
+fn parse_crate_line(line: &str) -> IResult<&str, Vec<Option<&str>>> {
+    separated_list1(
+        tag(" "),
+        alt((
+            map(delimited(tag("["), take(1_usize), tag("]")), Some),
+            map(tag("   "), |_| None),
+        )),
+    )(line)
 }
 
 // Parse Intructions
@@ -119,20 +100,14 @@ fn parse_instruction(i: &str) -> IResult<&str, Instruction> {
 }
 
 // Piles
-fn apply(piles: &mut Vec<Vec<Crate>>, ins: Instruction) {
+fn apply(piles: &mut Vec<Vec<&str>>, ins: Instruction) {
     for _ in 0..ins.quantity {
         let el = piles[ins.src].pop().unwrap();
         piles[ins.dst].push(el);
     }
 }
 
-fn apply_rev(piles: &mut Vec<Vec<Crate>>, ins: Instruction) {
-    let [src, dst] = piles
-        .get_many_mut([ins.src, ins.dst])
-        .expect("out of bounds / overlapping src/dst stacks");
-
+fn apply_rev(piles: &mut Vec<Vec<&str>>, ins: Instruction) {
+    let [src, dst] = piles.get_many_mut([ins.src, ins.dst]).unwrap();
     dst.extend(src.drain((src.len() - ins.quantity)..))
 }
-
-#[cfg(test)]
-mod tests {}

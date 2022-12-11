@@ -13,8 +13,7 @@ fn main() {
     println!("Badge Sum: {:?}", elf_rucksack::badge_sum());
     println!("Overlap Sum: {:?}", day_4::overlap_sum());
     println!("Overlap any Sum: {:?}", day_4::overlap_any_sum());
-    println!("Crates:");
-    day_5::print_crates();
+    println!("Crates: {}", day_5::print_crates());
 }
 
 mod prelude {
