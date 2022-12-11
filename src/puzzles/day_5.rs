@@ -50,18 +50,17 @@ pub fn print_crates() {
         })
         .collect();
 
-    let mut piles = Piles(transpose_rev(crate_lines));
+    let mut piles = transpose_rev(crate_lines);
 
     assert!(lines.next().unwrap().is_empty());
 
     for ins in lines.map(|line| all_consuming(parse_instruction)(line).finish().unwrap().1) {
-        piles.apply_rev(ins);
+        apply_rev(&mut piles, ins);
     }
 
     println!(
         "answer = {}",
         piles
-            .0
             .iter()
             .map(|pile| pile.last().unwrap().to_string())
             .collect::<String>()
@@ -83,8 +82,7 @@ fn transpose_rev<T>(v: Vec<Vec<Option<T>>>) -> Vec<Vec<T>> {
         .collect()
 }
 
-// Parse Numbers
-
+// Parse Intructions
 fn parse_number(i: &str) -> IResult<&str, usize> {
     map_res(digit1, |s: &str| s.parse::<usize>())(i)
 }
@@ -121,33 +119,19 @@ fn parse_instruction(i: &str) -> IResult<&str, Instruction> {
 }
 
 // Piles
-struct Piles(Vec<Vec<Crate>>);
-
-impl fmt::Debug for Piles {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        for (i, pile) in self.0.iter().enumerate() {
-            writeln!(f, "Pile {}: {:?}", i, pile)?;
-        }
-        Ok(())
+fn apply(piles: &mut Vec<Vec<Crate>>, ins: Instruction) {
+    for _ in 0..ins.quantity {
+        let el = piles[ins.src].pop().unwrap();
+        piles[ins.dst].push(el);
     }
 }
 
-impl Piles {
-    fn apply(&mut self, ins: Instruction) {
-        for _ in 0..ins.quantity {
-            let el = self.0[ins.src].pop().unwrap();
-            self.0[ins.dst].push(el);
-        }
-    }
+fn apply_rev(piles: &mut Vec<Vec<Crate>>, ins: Instruction) {
+    let [src, dst] = piles
+        .get_many_mut([ins.src, ins.dst])
+        .expect("out of bounds / overlapping src/dst stacks");
 
-    fn apply_rev(&mut self, ins: Instruction) {
-        let [src, dst] = self
-            .0
-            .get_many_mut([ins.src, ins.dst])
-            .expect("out of bounds / overlapping src/dst stacks");
-
-        dst.extend(src.drain((src.len() - ins.quantity)..))
-    }
+    dst.extend(src.drain((src.len() - ins.quantity)..))
 }
 
 #[cfg(test)]
