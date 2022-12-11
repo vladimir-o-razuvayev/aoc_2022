@@ -4,10 +4,7 @@ use puzzles::*;
 mod puzzles;
 
 fn main() {
-    println!(
-        "Highest 3 Calories: {:?}",
-        elf_calories::highest_calories(3)
-    );
+    println!("Highest 3 Calories: {:?}", day_1::highest_calories(3));
     println!("RPS Score: {:?}", elf_rps::score());
     println!("Rucksack Sum: {:?}", elf_rucksack::sum());
     println!("Badge Sum: {:?}", elf_rucksack::badge_sum());
