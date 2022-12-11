@@ -8,9 +8,10 @@ fn main() {
         elf_calories::highest_calories(3)
     );
     println!("RPS Score: {:?}", elf_rps::score());
-    println!("Rucksack Sum: {:?}", elf_rucksack::sum());
+    //println!("Rucksack Sum: {:?}", elf_rucksack::sum());
     println!("Badge Sum: {:?}", elf_rucksack::badge_sum());
-    println!("Overlap Sum: {:?}", day_4::overlap_sum());
+    // println!("Overlap Sum: {:?}", day_4::overlap_sum());
+    println!("Overlap any Sum: {:?}", day_4::overlap_any_sum());
 }
 
 mod prelude {
