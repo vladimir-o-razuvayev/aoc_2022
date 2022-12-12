@@ -5,7 +5,7 @@ mod puzzles;
 
 fn main() {
     println!("Highest 3 Calories: {:?}", day_1::highest_calories(3));
-    println!("RPS Score: {:?}", elf_rps::score());
+    println!("RPS Score: {:?}", day_2::score());
     println!("Rucksack Sum: {:?}", elf_rucksack::sum());
     println!("Badge Sum: {:?}", elf_rucksack::badge_sum());
     println!("Overlap Sum: {:?}", day_4::overlap_sum());
