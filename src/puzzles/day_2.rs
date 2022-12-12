@@ -1,7 +1,6 @@
 pub fn score() -> usize {
     include_str!("day_2_input.txt")
         .lines()
-        .filter(|l| !l.is_empty())
         .map(|line| {
             (match line.as_bytes()[2] as char {
                 'X' => 0, // Lose
