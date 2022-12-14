@@ -11,5 +11,5 @@ fn main() {
     println!("Overlap Sum: {:?}", day_4::overlap_sum());
     println!("Overlap any Sum: {:?}", day_4::overlap_any_sum());
     println!("Crates: {}", day_5::print_crates());
-    println!("First Marker: {}", day_6::first_marker())
+    println!("First Marker: {}", day_6::first_marker(14));
 }

@@ -1,10 +1,10 @@
-use std::collections::HashSet;
+use itertools::Itertools;
 
-pub fn first_marker() -> usize {
+pub fn first_marker(length: usize) -> usize {
     include_str!("day_6_input.txt")
         .as_bytes()
-        .windows(4)
-        .position(|window| window.iter().collect::<HashSet<_>>().len() == 4)
-        .map(|pos| pos + 4)
+        .windows(length)
+        .position(|window| window.iter().unique().count() == length)
+        .map(|pos| pos + length)
         .unwrap()
 }
