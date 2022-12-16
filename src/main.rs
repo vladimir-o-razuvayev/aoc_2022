@@ -12,4 +12,12 @@ fn main() {
     println!("Overlap any Sum: {:?}", day_4::overlap_any_sum());
     println!("Crates: {}", day_5::print_crates());
     println!("First Marker: {}", day_6::first_marker(14));
+    println!(
+        "Sum of dirs less than 100000: {}",
+        day_7::sum_of_dir_smaller_than_100000()
+    );
+    println!(
+        "Size of smallest dir to delete: {}",
+        day_7::size_of_smallest_dir_to_delete()
+    );
 }
