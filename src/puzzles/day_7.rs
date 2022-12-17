@@ -18,16 +18,8 @@ fn parse_path(i: &str) -> IResult<&str, Utf8PathBuf> {
 #[derive(Debug)]
 struct Ls;
 
-fn parse_ls(i: &str) -> IResult<&str, Ls> {
-    map(tag("ls"), |_| Ls)(i)
-}
-
 #[derive(Debug)]
 struct Cd(Utf8PathBuf);
-
-fn parse_cd(i: &str) -> IResult<&str, Cd> {
-    map(preceded(tag("cd "), parse_path), Cd)(i)
-}
 
 #[derive(Debug)]
 enum Command {
@@ -49,7 +41,10 @@ impl From<Cd> for Command {
 
 fn parse_command(i: &str) -> IResult<&str, Command> {
     let (i, _) = tag("$ ")(i)?;
-    alt((map(parse_ls, Into::into), map(parse_cd, Into::into)))(i)
+    alt((
+        map(map(tag("ls"), |_| Ls), Into::into),
+        map(map(preceded(tag("cd "), parse_path), Cd), Into::into),
+    ))(i)
 }
 
 #[derive(Debug)]
