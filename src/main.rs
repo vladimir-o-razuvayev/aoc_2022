@@ -1,6 +1,7 @@
 #![feature(get_many_mut)]
 use puzzles::*;
 
+#[allow(dead_code)]
 mod puzzles;
 
 fn main() {
@@ -20,6 +21,7 @@ fn main() {
     //     "Size of smallest dir to delete: {}",
     //     day_7::size_of_smallest_dir_to_delete()
     // );
-    println!("Number of visible trees: {}", day_8::visible());
-    println!("Highest Scenic Score: {}", day_8::max_scenic_score());
+    // println!("Number of visible trees: {}", day_8::visible());
+    // println!("Highest Scenic Score: {}", day_8::max_scenic_score());
+    println!("Visited by Rope Tail: {}", day_9::visit(10));
 }
