@@ -23,5 +23,6 @@ fn main() {
     // );
     // println!("Number of visible trees: {}", day_8::visible());
     // println!("Highest Scenic Score: {}", day_8::max_scenic_score());
-    println!("Visited by Rope Tail: {}", day_9::visit(10));
+    // println!("Visited by Rope Tail: {}", day_9::visit(10));
+    println!("Sum of Signal Strengths: {}", day_10::signal_sum());
 }
