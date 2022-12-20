@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 enum Instruction {
     Noop,
@@ -20,6 +22,37 @@ impl Instruction {
 }
 
 pub fn signal_sum() -> i32 {
+    values()
+        .iter()
+        .enumerate()
+        .map(|(i, &x)| (i as i32 + 1) * x)
+        .skip(19)
+        .step_by(40)
+        .sum()
+}
+
+pub fn print_image() -> () {
+    values()
+        .iter()
+        .chunks(40)
+        .into_iter()
+        .map(|chunk| {
+            chunk
+                .into_iter()
+                .enumerate()
+                .map(|(position, value)| {
+                    if (value - position as i32).abs() <= 1 {
+                        '#'
+                    } else {
+                        ' '
+                    }
+                })
+                .collect()
+        })
+        .for_each(|line: String| println!("{}", line));
+}
+
+fn values() -> Vec<i32> {
     let instructions = Instruction::parse();
     let mut x = 1;
     let mut values = Vec::new();
@@ -36,10 +69,4 @@ pub fn signal_sum() -> i32 {
     }
 
     values
-        .iter()
-        .enumerate()
-        .map(|(i, &x)| (i as i32 + 1) * x)
-        .skip(19)
-        .step_by(40)
-        .sum()
 }

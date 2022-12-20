@@ -25,4 +25,5 @@ fn main() {
     // println!("Highest Scenic Score: {}", day_8::max_scenic_score());
     // println!("Visited by Rope Tail: {}", day_9::visit(10));
     println!("Sum of Signal Strengths: {}", day_10::signal_sum());
+    day_10::print_image();
 }
