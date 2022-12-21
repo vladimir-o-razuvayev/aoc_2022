@@ -1,5 +1,7 @@
 use std::fmt;
 
+use itertools::Itertools;
+
 struct Monkey {
     items_held: Vec<usize>,
     operation: Box<dyn Fn(usize) -> usize>,
@@ -19,17 +21,7 @@ impl Monkey {
                 .collect();
             monkies.push(Monkey {
                 items_held: lines[1].split(", ").map(|n| n.parse().unwrap()).collect(),
-                operation: {
-                    let op: Vec<_> = lines[2].rsplit_once("= ").unwrap().1.split(' ').collect();
-                    match op[2] {
-                        "old" => box |old| old * old,
-                        b => match (op[1], b.parse::<usize>().unwrap()) {
-                            ("+", n) => box move |old| old + n,
-                            ("*", n) => box move |old| old * n,
-                            _ => unreachable!(),
-                        },
-                    }
-                },
+                operation: Self::parse_operation(lines[2]),
                 divisor: lines[3].rsplit_once(' ').unwrap().1.parse().unwrap(),
                 if_true: lines[4].rsplit_once(' ').unwrap().1.parse().unwrap(),
                 if_false: lines[5].rsplit_once(' ').unwrap().1.parse().unwrap(),
@@ -37,6 +29,18 @@ impl Monkey {
             })
         }
         monkies
+    }
+
+    fn parse_operation(operation: &str) -> Box<dyn Fn(usize) -> usize> {
+        let op: Vec<_> = operation.rsplit_once("= ").unwrap().1.split(' ').collect();
+        match op[2] {
+            "old" => box |old| old * old,
+            b => match (op[1], b.parse::<usize>().unwrap()) {
+                ("+", n) => box move |old| old + n,
+                ("*", n) => box move |old| old * n,
+                _ => unreachable!(),
+            },
+        }
     }
 }
 
@@ -55,7 +59,7 @@ impl fmt::Debug for Monkey {
     }
 }
 
-pub fn print_monkies() -> () {
+pub fn print_monkies() -> usize {
     let mut monkies = Monkey::parse();
     let divisor_product: usize = monkies.iter().map(|m| m.divisor).product();
     let mut thrown_items = vec![vec![]; monkies.len()];
@@ -76,6 +80,10 @@ pub fn print_monkies() -> () {
         }
     }
 
-    dbg!(thrown_items);
-    dbg!(monkies);
+    monkies
+        .iter()
+        .map(|monkey| monkey.inspections)
+        .sorted_unstable_by(|a, b| b.cmp(a))
+        .take(2)
+        .product()
 }

@@ -27,5 +27,5 @@ fn main() {
     // println!("Visited by Rope Tail: {}", day_9::visit(10));
     // println!("Sum of Signal Strengths: {}", day_10::signal_sum());
     // day_10::print_image();
-    day_11::print_monkies();
+    println!("Monkey Business: {}", day_11::print_monkies());
 }
