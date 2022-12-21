@@ -1,4 +1,5 @@
 #![feature(get_many_mut)]
+#![feature(box_syntax)]
 use puzzles::*;
 
 #[allow(dead_code)]
@@ -24,6 +25,7 @@ fn main() {
     // println!("Number of visible trees: {}", day_8::visible());
     // println!("Highest Scenic Score: {}", day_8::max_scenic_score());
     // println!("Visited by Rope Tail: {}", day_9::visit(10));
-    println!("Sum of Signal Strengths: {}", day_10::signal_sum());
-    day_10::print_image();
+    // println!("Sum of Signal Strengths: {}", day_10::signal_sum());
+    // day_10::print_image();
+    day_11::print_monkies();
 }
