@@ -1,5 +1,8 @@
-pub fn highest_calories(count: usize) -> usize {
-    let mut calories = include_str!("day_1_input.txt")
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn highest_calories(calories: &str, count: usize) -> usize {
+    let mut calories = calories
         .lines()
         .map(|v| v.parse::<usize>().ok())
         .collect::<Vec<_>>()
