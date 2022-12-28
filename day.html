@@ -2,24 +2,46 @@
 <html>
 
 <head>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            background: transparent;
-        }
-
-        svg {
-            width: 100%;
-            height: auto;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 
 <body>
-    <div id="content"></div>
-    <a href="index.html">Back</a>
+    <div id="content" class="container is-fluid">
+        <h1 class="title"></h1>
+        <div style="display: flex;">
+            <div class="field">
+                <p class="control">
+                    <span class="select">
+                        <select id="puzzle_input">
+                            <option>Example</option>
+                            <option>Input</option>
+                        </select>
+                    </span>
+                </p>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input id="puzzle_value" class="input" type="number" min="0" placeholder="0">
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="block">
+                    <textarea class="textarea" id="display_input"></textarea>
+                </div>
+            </div>
+            <div class="column">
+                <p id="result"></p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="index.html" class="button">Back</a>
+        </div>
+    </div>
 </body>
 
 </html>
