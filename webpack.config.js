@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     'index': './index.js',
     'day-01': './src/puzzles/day_01/index.js',
+    'day-02': './src/puzzles/day_02/index.js',
     'day-12': './day-12.js'
   },
   output: {
@@ -40,6 +41,12 @@ module.exports = {
       chunks: ['day-01'],
       template: 'day.html',
       title: 'Day 1'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'day-02.html',
+      chunks: ['day-02'],
+      template: 'day.html',
+      title: 'Day 2'
     }),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, ".")

@@ -1,5 +1,8 @@
-pub fn score() -> usize {
-    include_str!("day_2_input.txt")
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub fn score(strategy_guide: &str) -> usize {
+    strategy_guide
         .lines()
         .map(|line| {
             (match line.as_bytes()[2] as char {
